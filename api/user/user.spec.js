@@ -3,10 +3,18 @@
 const request = require('supertest');
 const should = require('should');
 const app = require('../../index');
+const models = require('../../models');
 
 describe('GET /users는', () => {
+    const users = [
+        {name: 'alice'}, {name: 'bek'}, {name: 'chris'}
+    ];
+    before(() => models.sequelize.sync({ force: true })); // db 싱크, 테이블 생성
+    before(() => models.User.bulkCreate(users)); // 샘플 데이터 집어 넣음
     describe('성공시', () => {
-        it('user 객체를 담은 배열로 응답한다', (done) => {
+        // 모카에서는 그냥 promise를 리턴하면 자동으로 비동기가 완료될 때까지 보장해준다.
+
+        it('user 객체를 담은 배열로 응답한다', (done) => { // it.only() 또는 describe.only()로 하면 이 테스트만 실행한다.
             request(app)
             .get('/users')
             .end((err, res) => {
@@ -34,6 +42,11 @@ describe('GET /users는', () => {
 });
 
 describe('GET /users/1는', () => {
+    const users = [
+        {name: 'alice'}, {name: 'bek'}, {name: 'chris'}
+    ];
+    before(() => models.sequelize.sync({ force: true })); // db 싱크, 테이블 생성
+    before(() => models.User.bulkCreate(users)); // 샘플 데이터 집어 넣음
     describe('성공시', () => {
         it('id가 1인 유저 객체를 반환한다', (done) => {
             request(app)
@@ -61,6 +74,11 @@ describe('GET /users/1는', () => {
 });
 
 describe('DELETE /users/1', () => {
+    const users = [
+        {name: 'alice'}, {name: 'bek'}, {name: 'chris'}
+    ];
+    before(() => models.sequelize.sync({ force: true })); // db 싱크, 테이블 생성
+    before(() => models.User.bulkCreate(users)); // 샘플 데이터 집어 넣음
     describe('성공시', () => {
         it('204를 응답한다', (done) => {
             request(app)
@@ -80,6 +98,11 @@ describe('DELETE /users/1', () => {
 });
 
 describe('POST /users', () => {
+    const users = [
+        {name: 'alice'}, {name: 'bek'}, {name: 'chris'}
+    ];
+    before(() => models.sequelize.sync({ force: true })); // db 싱크, 테이블 생성
+    before(() => models.User.bulkCreate(users)); // 샘플 데이터 집어 넣음
     describe('성공시', () => {
         let body;
         let name = 'daniel'
@@ -121,6 +144,11 @@ describe('POST /users', () => {
 });
 
 describe('PUT /users/:id', () => {
+    const users = [
+        {name: 'alice'}, {name: 'bek'}, {name: 'chris'}
+    ];
+    before(() => models.sequelize.sync({ force: true })); // db 싱크, 테이블 생성
+    before(() => models.User.bulkCreate(users)); // 샘플 데이터 집어 넣음
     describe('성공시', () => {
         it('변경된 name을 응답한다', (done) => {
             const name = 'charlie';

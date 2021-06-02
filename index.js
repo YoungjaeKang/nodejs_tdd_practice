@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 // 라우팅 설정
 app.use('/users', user);
-
+app.use('/photo', photo);
 
 // app.listen(3000, function () {
 //     console.log(`Example app listening on port 3000!`);
